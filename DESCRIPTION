@@ -1,0 +1,20 @@
+Package: IdMappingRetrieval
+Type: Package
+Title: ID Mapping Data Retrieval
+Version: 0.99.1
+Date: 2011-06-30
+Author: Alex Lisovich, Roger Day
+Maintainer: Alex Lisovich <all67@pitt.edu>, Roger Day <day01@pitt.edu>
+Description: Data retrieval for identifier mapping performance analysis
+License: GPL-2
+Depends: R.oo, XML, RCurl, rChoiceDialogs, ENVISIONQuery
+Imports: biomaRt, ENVISIONQuery, DAVIDQuery, AffyCompatible,
+    R.methodsS3, R.oo, utils
+biocViews: Bioinformatics, Annotation, MultipleComparisons
+LazyLoad: yes
+Collate: 'annotation.R' 'annotationAffx.R' 'annotationDataRoot.R' 'zzz.R'
+    'annotationDavid.R' 'annotationDavidCsv.R' 'annotationEnsembl.R'
+    'annotationEnsemblCsv.R' 'annotationEnvision.R'
+    'annotationNetAffx.R' 'compatibility.R'
+    'IdMappingRetrieval-package.R' 'serviceManager.R'
+

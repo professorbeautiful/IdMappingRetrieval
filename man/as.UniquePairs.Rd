@@ -1,0 +1,24 @@
+\name{as.UniquePairs}
+\alias{as.UniquePairs}
+\title{Create a UniquePairs object by converting a single IdMap or a list of Id Maps into...}
+\usage{as.UniquePairs(idMapData, secondaryIDs, keepMissing=FALSE,
+    verbose=FALSE)}
+\description{Create a UniquePairs object by converting a single IdMap or a list of Id Maps into 
+a single or list of unique pairs data structures optionally intersecting
+the secondary ID set with an external secondary ID set if farther data 
+size reduction is necessary}
+\details{The alternative representation of an IdMap suitable for performing
+the correlation related processing. Contains a data frame with two columns, 
+each row of which represents a unique pair <primary ID, secondary ID>
+where primary ID corresponds to the primaryIDs of an ID Map and secondary ID 
+corresponds to a single ID from a list of comma separated secondary IDs within
+the corresponding ID Map. The column names correspond to the primary/secondary 
+keys of an Id Map ('acc' and 'probeset' for example)}
+\value{UniquePairs object}
+\keyword{internal}
+\author{Roger Day, Alex Lisovich}
+\arguments{\item{idMapData}{an IdMap object or a list of IdMap objects to be converted into UniquePairs}
+\item{secondaryIDs}{optional secondary ID list on which the resulting UniquePairs is intersected. Default is NULL (not present).}
+\item{keepMissing}{logical indicating if the rows with empty secondary IDs should removed 
+from the resulting object. Default is FALSE (keep such rows)}
+\item{verbose}{if TRUE enables diagnostic messages}}

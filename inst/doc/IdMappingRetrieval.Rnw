@@ -1,0 +1,711 @@
+%% LyX 1.6.9 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=3cm,lmargin=3cm,rmargin=3cm,headheight=1cm,headsep=1cm,footskip=2cm}
+\usepackage{babel}
+
+\usepackage{amstext}
+\usepackage{setspace}
+\usepackage[unicode=true]
+ {hyperref}
+\usepackage{breakurl}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\newcommand{\Rcode}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rcommand}[1]{{\texttt{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Rfunarg}[1]{{\textit{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rmethod}[1]{{\textit{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+
+% Meta information - fill between {} and do not remove %
+% \VignetteIndexEntry{Collection and subsequent fast retrieval of identifier mapping related information from various online sources.}
+% \VignetteDepends{}
+% \VignetteKeywords{}
+% \VignettePackage{IdMappingRetrieval}
+
+\makeatother
+
+\begin{document}
+
+\title{The \Rpackage{IdMappingRetrieval} package in Bioconductor: Collecting
+and caching identifier mappings from online sources.}
+
+
+\author{Alex Lisovich \dag{}, Roger S. Day \dag{}\ddag{} }
+
+\maketitle
+\begin{center}
+{ \dag{}Department of Biomedical Informatics, \dag{}\ddag{} Department
+of Biostatistics, \\
+University of Pittsburgh}
+\end{center}
+
+\section{Overview}
+
+Research which integrates data from multiple data platforms must of
+course merge on samples processed in parallel on the platforms. However,
+exploiting the full biological significance of the data depends on
+merging on the respective features as well. The features have platform-specific
+biological identifiers, so identifier mapping is critical to this
+merging. The IdMappingRetrieval package allows initial acquisition
+of biological identifier mappings (ID maps) from online bioinformatics
+services, with caching in localdata repositories for subsequent fast
+retrieval. An ID map is a one-to-many map from one ID type (called
+the primary key) to another (called the secondary key). The services
+currently supported are NetAffx, DAVID, and Ensembl. The package employs
+a unified interface for accessing these services, so that the local
+repositories will be easy to create, update, and use. Aside from identifier
+maps themselves, the the service's complete annotation data sets are
+also accessible through the same mechanism. . Therefore, although
+ID mapping is the primary goal, secondarily the package performs as
+a generic annotation data collection tool if desired.
+
+The objects produced by this package are specifically suited for use
+by the package \Rpackage{IdMappingAnalysis}, currently in preparation
+for Bioconductor. The purpose of \Rpackage{IdMappingAnalysis} is
+to characterize and compare two or more ID maps.
+
+Retrieval is typically subsetted by Affymetrix array. 
+
+
+\section{The package architecture}
+
+
+\subsection{Two types of services: query-based and file-based}
+
+The IdMappingRetrieval package retrieves data using service objects.
+The package supports two types of services, query-based and file-based.
+The query-based services support automated retrieval either through
+a standard service API, through third-party R packages, or through
+simulated interaction with service web pages. The file-based services
+assist the manual download of raw data, followed by extraction of
+ID maps and other information. For diverse reasons they generally
+require more active user participation.
+\begin{enumerate}
+\item Query-based services
+
+\begin{enumerate}
+\item Affymetrix annotation file repository {[}1{]}, \\
+ Data source: \href{http://www.bioconductor.org/packages/2.2/bioc/html/AffyCompatible.html}{http://www.bioconductor.org/packages/2.2/bioc/html/AffyCompatible.html}. 
+
+
+Service class name: AnnotationAffx.
+
+Access method: \Rpackage{AffyCompatible} Bioconductor package.
+
+\item DAVID online query system {[}2,3{]}, \\
+Data source: \href{http://www.bioconductor.org/packages/release/bioc/html/DAVIDQuery.html}{http://www.bioconductor.org/packages/release/bioc/html/DAVIDQuery.html}
+
+
+Service class name: AnnotationDavid.
+
+Access method: \Rpackage{DAVIDQuery} Bioconductor package.
+
+\item Ensembl online query system {[}4,5{]}, accessed using biomaRt R package\\
+Data source: \href{http://www.bioconductor.org/packages/2.2/bioc/html/biomaRt.html}{http://www.bioconductor.org/packages/2.2/bioc/html/biomaRt.html}
+
+
+Service class name: AnnotationEnsembl.
+
+Access method: \Rpackage{biomaRt} Bioconductor package.
+
+\item EnVision online query system {[}6{]}, accessed using the SOAP-based
+Web Services. 
+
+
+Data source: \textbf{LINK NEEDED}.
+
+Service class name: AnnotationEnvision
+
+Access method: \Rpackage{ENVISIONQuery} Bioconductor package.
+
+\end{enumerate}
+\item File-based services
+
+\begin{enumerate}
+\item Affymetrix NetAffx batch system supporting data download in chunks
+{[}1{]}.
+
+
+Data source: \href{http://www.affymetrix.com/analysis/index.affx}{http://www.affymetrix.com/analysis/index.affx}. 
+
+Service class name: AnnotationNetxAffx.
+
+Access method: See Appendix A.
+
+\item DAVID knowledge base data repository {[}2,3{]}. 
+
+
+Data source: \href{http://david.abcc.ncifcrf.gov/knowledgebase/DAVID_knowledgebase.html}{http://david.abcc.ncifcrf.gov/knowledgebase/DAVID\_{}knowledgebase.html}). 
+
+Service class name: AnnotationDavidCsv.
+
+Access method: See Appendix B.
+
+\item Ensembl download service {[}5,6{]}.
+
+
+Data source: \href{http://uswest.ensembl.org}{http://uswest.ensembl.org}. 
+
+Service class name: AnnotationEnsemblCsv..
+
+Access method: See Appendix C.
+
+\end{enumerate}
+\end{enumerate}
+
+\subsection{User tasks, services, classes and objects}
+
+The package utilizes the R.oo framework for S3 class based development
+({[}7{]}, 
+
+\href{http://cran.r-project.org/web/packages/R.oo/index.html}{http://cran.r-project.org/web/packages/R.oo/index.html}),
+which we found to be well suited for the task. As seen in the table
+above, different subclasses of the Annotation class support access
+to each specific ID map retrieval service.\\
+
+\begin{enumerate}
+\item For each service of interest:
+
+\begin{enumerate}
+\item If necessary, set user credentials for login.
+\item Instantiate the service object as an instance of the Annotations subclass
+suitable for the service of interest,Specify the query parameters.
+\item Invoke a data collection method (either getIdList or getDataFrame)
+on the service object. or a set of objects each of which represents
+the particular service..
+\end{enumerate}
+\item For a list of services:
+
+\begin{enumerate}
+\item Loop over the services as above.
+\item Alternatively, for convenience, instantiate the ServiceManager and
+use corresponding methods.\\
+
+\end{enumerate}
+Some parameters are common for all service object types. 
+\begin{itemize}
+\item cacheFolderName - a subdirectory name where data for given service
+object will be cashed ({}``EnVision'',''DAVID'' etc.)
+\item primaryColumn and secondaryColumn -the column names which a service
+object uses to extract the Id Map from the raw data frame. In case
+primaryColumn/secondaryColumn contain multiple column names, the service
+object merges the corresponding raw data frame columns into one (service
+specific)
+\item swap - a boolean. If true, the primary/secondary columns will be swapped
+at the end of the data retrieval process. Swapping reverses the 'one
+to many' identifier relation
+\item species - the species the collected data should be subsetted on
+\end{itemize}
+\end{enumerate}
+The user can override default values during the service object's creation.
+The default values are typically suitable. For the file-based services,
+the constructor has an additional parameter:
+\begin{itemize}
+\item the location of the file(s) or the directory containing the input
+data. 
+\end{itemize}
+Note that micro array type is not an attribute of a service object
+and is supplied as an argument to the data retrieval method, which
+allows to reuse the same service object for multiple micro array types
+data collection. It also allows to define micro array type interactively
+in case array type argument is equal to 'menu' (see help pages for
+details). \\
+
+
+\begin{tabular}{|c|c|c|}
+\hline 
+\noalign{\vskip\doublerulesep}
+\textsf{\textbf{\emph{\footnotesize Class}}} & \textsf{\textbf{\emph{\footnotesize Data Source}}} & \textsf{\textbf{\emph{\footnotesize Query versus File-based}}}\tabularnewline[\doublerulesep]
+\hline
+{\footnotesize AnnotationAffx} & {\footnotesize Affymetrix annotation file repository} & {\footnotesize Query}\tabularnewline
+{\footnotesize (based on AffyCompatible)} &  & \tabularnewline
+\hline 
+{\footnotesize AnnotationNetAffx} & {\footnotesize Affymetrix NetAffx batch query system} & {\footnotesize File (Appendix A)}\tabularnewline
+\hline 
+{\footnotesize AnnotationDavid} & {\footnotesize DAVID online query system} & {\footnotesize Query}\tabularnewline
+{\footnotesize (based on DAVIDQuery)} &  & \tabularnewline
+\hline 
+{\footnotesize AnnotationDavidCsv} & {\footnotesize DAVID knowledge base} & {\footnotesize File (Appendix B)}\tabularnewline
+\hline 
+{\footnotesize AnnotationEnsembl} & {\footnotesize Ensembl} & {\footnotesize Query}\tabularnewline
+{\footnotesize (based on biomaRt)} &  & \tabularnewline
+\hline
+{\footnotesize AnnotationEnsemblCsv} & {\footnotesize Ensembl front end} & {\footnotesize File (Appendix C)}\tabularnewline
+\hline
+{\footnotesize AnnotationEnvision} & {\footnotesize EnVision Web Services} & {\footnotesize Query}\tabularnewline
+{\footnotesize (based on ENVISIONQuery)} &  & \tabularnewline
+\hline
+\end{tabular}\\
+
+
+
+\subsection{The caching subsystem}
+
+Due to the large amount of data available for high density micro arrays,
+the process of online data retrieval takes significant time ranging
+from a few minutes for a {}``fast'' service to up to an hour (as
+in case of EnVision Web Services). It would be impractical to retrieve
+the same data again and again at the beginning of each analysis session
+given the fact that the data in online repository typically get updated
+few times a year. The IdMappingRetrieval caching mechanism allows
+the system to store the retrieved data locally allowing to reuse them
+in subsequent processing sessions significantly (hundreds of times)
+increasing the retrieval speed. When request for data retrieval is
+received, the system checks if the data requested already stored in
+caching directory and initiates the online retrieval process only
+when data of interest is not available. The system can be forced to
+retrieve the data online even if present in caching subsystem thus
+allowing to update the cached data if necessary. The caching subsystem
+is implemented as a hierarchical set of folders within a single root
+directory which is created if necessary during the session setup (see
+Getting Started). 
+
+Under the root directory, there is a set of folders each corresponding
+to the data collected by a particular service. The service folder
+name is assigned during the particular service object creation and
+takes a default name if not specified ({}``Ensembl'' for AnnotationEnsembl
+object {}``DAVID'' for AnnotationDavid object etc.). It is possible
+to create multiple folders for a given service object type in case
+the folder name specified explicitly thus allowing to cache multiple
+instances of data from the same online resource. This feature allows
+to store data available from the same service at different moments
+allowing to investigate how the given data source was evolving over
+time (see Use Case 2). 
+
+For a given service folder, there is a set of subfolders each of which
+corresponds to a particular micro array name ({}``HG-U133\_Plus\_2''
+etc.). Each micro array type related subfolder contains a set of files
+storing the R data objects (.RData files). There are two types of
+objects which are stored under the micro array folder. The first is
+a (single) data frame containing the raw data retrieved from a particular
+service, possibly containing multiple columns each for a particular
+data attribute. The second is a set of data frames representing the
+mapping between the particular attribute pairs (Uniprot Accession
+to probeset ID mapping as an example) extracted from a raw data frame
+during the last step of the ID mapping information retrieval process.
+The {}``two tier'' caching allows to further speed up the data retrieval
+process for a particular attribute pair eliminating the need to read
+the entire raw data frame, whose size can easily exceed few dozen
+MB.
+
+
+\subsection{The output data formats}
+
+
+\subsubsection{Identifier mapping data format}
+
+The identifier mapping related information (ID Map) is represented
+by a data frame consisting of two columns in character format. The
+first (primary) column contains a unique set of identifiers of a particular
+type (Uniprot accessions being an example) which represent the identifier
+mapping source. The second (secondary) column contains the results
+of mapping of a given (primary) identifier to the target identifier
+type (Affymetrix probeset ID as an example) obtained as a result of
+a query to the particular online service. As a single source identifier
+can map to multiple target identifiers, the secondary column elements
+are represented by comma separated strings. 
+
+The column names can be set during the service object initialization
+or can be deduced from the raw data if this information is not provided.
+In later case, the ID Map column names will depend on the particular
+service in use. If a further comparison of ID mapping performance
+for various online services is desirable, it is recommended to set
+the unified column names during the service objects initialization
+so to the nature of ID Map data ({}``Uniprot'' and {}``Affy''
+for Uniprot accessions to Affymetrix probeset ID mapping as an example).
+In further writing, we will refer to the names of a first and second
+columns as primary and secondary keys correspondingly.
+
+
+\subsubsection{Complete raw data set format}
+
+The system always returns the complete raw data set as a data frame.
+As each particular online service uses it's own data format, the data
+frame format will be different for each particular service and the
+query type. If the detailed information on the data frame content
+is desirable, we refer user to the documentation from a particular
+online service provider
+
+
+\section{Examples}
+
+
+\subsection{Session initialization and setup}
+
+The data retrieval session always starts with the call to the package
+initialization function which tells the system which directory should
+be used for data caching. If specified directory does not exist yet,
+it will be created during the initialization process. As some online
+services require credentials (user ID and password) to grant user
+an access to the data, the next step of initialization process for
+a newly created caching directory should be setting the credentials
+for a service which requires them. At the moment, the only service
+directly requiring credentials is an Affymetrix query-based service
+(AnnotationNetAffx), however the rest of implemented services also
+utilizes some of the AnnotationAffx functionality (micro array name
+and/or probeset ID list retrieval) and therefore requires setting
+the same credentials during initialization process. Note that setting
+credentials is mandatory only for newly created caching directory
+and can be omitted in subsequent data retrieval sessions. The final
+step in initialization process is setting the verbosity level, defining
+the micro array type, mnemonic names for source and target identifier
+types (primary and secondary key values) as well as location of files
+and/or folders for file-based services. A typical initialization script
+for a data retrieval session is given below:
+
+\begin{singlespace}
+<<chunk1,keep.source=TRUE>>=
+library(IdMappingRetrieval)
+# setup verbosity level,array type and DB keys
+arrayType <- "HG-U133_Plus_2";
+primaryKey <- "Uniprot";
+secondaryKey <- "Affy";
+#initialize caching directory structure
+Annotation$init(directory="./annotationData",verbose=TRUE);
+#set Affymetrix credentials
+AnnotationAffx$setCredentials(
+   user="alex.lisovich@gmail.com",password="125438",verbose=TRUE);
+@
+\end{singlespace}
+
+
+\subsection{Service object initialization}
+
+A few examples of different service objects initialization are given
+below.
+
+\begin{singlespace}
+<<chunk2,eval=FALSE,keep.source=TRUE>>=
+#create Affymetrix service object
+annAffx_Q <- AnnotationAffx(cacheFolderName="Affymetrix",
+                         primaryColumn="Probe.Set.ID",
+                         secondaryColumn="SwissProt",
+                         swap=TRUE);
+#create Ensembl file-based service object
+annEnsemblCsv <- AnnotationEnsemblCsv(cacheFolderName="EnsemblCsv",
+                         primaryColumn=c("UniProt.SwissProt.Accession",
+                                         "UniProt.TrEMBL.Accession"),
+                         secondaryColumn=NA,
+                         swap=FALSE, full.merge=TRUE,
+                         df_filename="ENSEMBL_biomart_export.txt");
+#create Envision service object
+annEnvision <- AnnotationEnvision(cacheFolderName="EnVision",
+                         primaryColumn=c("UniProt.SwissProt.Accession", 
+                                         "UniProt.TrEMBL.Accession"),
+                         secondaryColumn=NA,
+                         swap=TRUE, species="Homo sapiens", full.merge=TRUE);
+@
+\end{singlespace}
+
+
+\subsection{Collecting ID maps from multiple services }
+
+Typically, the IdMappingRetrieval package is used in conjunction with
+the IdMappingAnalysis package which accepts the set of collected identifier
+mapping data in the form of IdMap object list . The steps involved
+in the process include: 
+\begin{itemize}
+\item Defining array type and primary/secondary key values for a resulting
+IdMap object set $^{\text{*}}$. 
+\item Defining the location of a file or directory containing preloaded
+data for file-based services 
+\item Creating a set of service retrieval objects, one per each particular
+service 
+\item Retrieving the Id Map through the getIdMap() method or a complete
+raw data frame through the getDataFrame() method.
+\end{itemize}
+$^{\text{*}}$The need to define the primary/secondary column names
+for resulting IdMap object set on top of primaryColumn/secondaryColumn
+arguments used during the service object creation arises from the
+fact that there is no standard naming convention for the raw data
+column names among the services. Therefore for a subsequent analysis
+of identifier mapping performance among the services we provide the
+arguments primaryKey and secondaryKey to getIdMap() and getIdMapList()
+methods for Annotation and ServiceManager objects respectively.
+
+The script below illustrates the process of collecting such data from
+all services implemented within the IdMappingRetrieval package.
+
+<<chunk3a,keep.source=TRUE>>=
+# create service objects
+services <- list();
+services$NetAffx_F <- AnnotationAffx("Affymetrix");
+services$DAVID_Q <- AnnotationDavid("DAVID",species="Homo sapiens");
+
+#collect Id Map data 
+idMapList <- lapply(services, getIdMap,
+              arrayType=arrayType,
+              primaryKey=primaryKey,
+              secondaryKey=secondaryKey,
+              force=FALSE, verbose=TRUE);
+
+@
+
+
+This initial retrieval takes some time. But repeating the retrieval is fast due to caching.
+
+<<chunk3b,keep.source=TRUE>>=
+
+idMapList <- lapply(services, getIdMap,
+                 arrayType=arrayType,
+                 primaryKey=primaryKey,
+                 secondaryKey=secondaryKey,
+                 force=FALSE, verbose=TRUE);
+names(idMapList);
+idMapList$NetAffx_F[100:110,];
+idMapList$DAVID_Q[100:110,];
+@
+Instead of map objects, the results can be stored as data frames.
+
+<<chunk3c,keep.source=TRUE>>=
+#collect complete data frames
+dfList <- lapply(services, getDataFrame,
+                 arrayType=arrayType,
+                 force=FALSE, verbose=TRUE);
+names(dfList);
+names(dfList$NetAffx_F);
+names(dfList$DAVID_Q);
+@
+
+
+\subsection{Collecting data from various services using service manager}
+
+An alternative way of achieving the same results is to use the \Rclass{ServiceManager}
+object, a container for service objects. The \Rclass{ServiceManager}
+class generates the full set of default services automatically. The
+following script repeats the work of the previous code, more compactly. 
+
+<<chunk4,keep.source=TRUE>>=
+#create service manager object containing set of default services
+svm <- ServiceManager(ServiceManager$getDefaultServices());
+names(getServices(svm));
+idMapList <- getIdMapList(svm,
+                        arrayType=arrayType,
+                        selection=c("NetAffx_Q","DAVID_Q"),
+                        primaryKey=primaryKey,
+                        secondaryKey=secondaryKey, verbose=TRUE);
+#collect complete data frames
+dfList <- getDataFrameList(svm,
+                        arrayType=arrayType,
+                        selection=c("NetAffx_Q","DAVID_Q"), verbose=TRUE);
+@
+
+
+\subsection{Collecting data from various services interactively using service
+manager}
+
+If micro array type and/or the paths for file-based services are not
+defined (set to NULL), ServiceManager present user with dialog(s)
+allowing selecting it interactively. Note that in a code snippet below
+the set of default services is generated internally by invoking a
+static version of getIdMapList() and getDataFrameList().
+
+<<chunk5, eval=FALSE,keep.source=TRUE>>=
+#collect complete IdMap data interactively 
+#selecting array type and services to collect data from
+idMapList <- ServiceManager$getIdMapList(
+                   primaryKey= primaryKey,
+                   secondaryKey=secondaryKey,verbose=TRUE);
+#collect complete data frames interactively 
+#selecting array type and services to collect data from 
+dfList <- ServiceManager$getDataFrameList(
+                   arrayType="menu",
+                   selection="menu", verbose=TRUE);
+@
+
+<<chunk6,results=hide,echo=FALSE,keep.source=FALSE>>=
+#remove caching directory to prevent including it into tar.gz during build
+unlink("./annotationData",recursive=TRUE);
+@
+
+
+\section{Session information }
+
+This version of IdMappingRetrieval has been developed with R 2.11.0. 
+
+R session information:
+
+<<sessionInfo, results=tex>>=
+toLatex(sessionInfo())
+@
+
+
+\section{Acknowledgments}
+
+We would like to thank Rafael Jimenez from the Enfin EnCore team for
+an enjoyable discussion and the great effort he has put into expanding
+the ID mapping related EnCore web services to better suite our needs.
+We also would like to thank Himanshu Grover, a graduate student in
+Biomedical Informatics at the University of Pittsburgh, for the great
+effort and useful suggestions he has made during the package preparation
+and testing.
+
+
+\section{References}
+\begin{description}
+\item [{{[}1{]}}] Liu, G., NetAffx: Affymetrix probesets and annotations.
+Nucleic Acids Res. 2003, 31(1):82-6.
+\item [{{[}2{]}}] Huang D.W., Sherman B.T., Tan Q., Kir J., Liu D., Bryant
+D., Guo Y., Stephens R., Baseler M.W., Lane H.C. et al. (2007) DAVID
+Bioinformatics Resources: expanded annotation database and novel algorithms
+to better extract biology from large gene lists. Nucleic Acids Res.,
+35, W169-W175.
+\item [{{[}3{]}}] Huang D.W., Sherman B.T. and Lempicki R.A. (2008) Systematic
+and integrative analysis of large gene lists using DAVID bioinformatics
+resources. Nat. Protoc., doi: 10.1038/nprot.2008.211.
+\item [{{[}4{]}}] Xosé M. Fernández-Suárez and Michael K. Schuster Using
+the Ensembl Genome Server to Browse Genomic Sequence Data. UNIT 1.15
+in Current Protocols in Bioinformatics, Jun 2010. \\
+www.ncbi.nlm.nih.gov/pubmed/20521244
+\item [{{[}5{]}}] Giulietta M Spudich and Xosé M Fernández-Suárez Touring
+Ensembl: A practical guide to genome browsing BMC Genomics 2010, 11:295
+(11 May 2010)
+\item [{{[}6{]}}] Florian Reisinger, Manuel Corpas, John Hancock, Henning
+Hermjakob, Ewan Birney and Pascal Kahlem. ENFIN - An Integrative Structure
+for Systems Biology. Data Integration in the Life Sciences Lecture
+Notes in Computer Science, 2008, Volume 5109/2008, 132-143, DOI: 10.1007/978-3-540-69828-9\_13 
+\item [{{[}7{]}}] Henrik Bengtsson, The R.oo package - Object-oriented
+programming with references using standard R code, Talk at the DSC
+2003 conference, Wienna, March 22, 2003.
+\end{description}
+
+\section*{Appendix A}
+
+
+\subsection*{Obtaining the Affymetrix ID Mapping data files using the NetAffx
+batch query system and HG-U133\_Plus\_2 array as an example.}
+\begin{enumerate}
+\item Create a set of the files for upload containing the set of Affymetrix
+Probe Set IDs for a given array ensuring the number of IDs for each
+file does not exceed 10000 (NetAffx batch query limit): \\
+\\
+AnnotationNetAffx\$createSubmission(\\
+chunk=10000,folder=\textquotedbl{}./NetAffx\_submission\textquotedbl{},verbose=TRUE);
+\item Register on the Affymetrix Web site (\href{http://www.affymetrix.com}{www.affymetrix.com})
+if you do not have an account yet. 
+\item Select \textquotedblleft{}NetAffx\textquotedblright{} item in the
+menu at the top of the page and then select \textquotedblleft{}Batch
+Query\textquotedblright{} item in \textquotedblleft{} 3` IVT Expression\textquotedblright{}
+tab on the NetAffx page. The \textquotedblleft{}Batch Query\textquotedblright{}
+page will popup. 
+\item Create a custom annotation view which should include Probe Set ID
+as primary (first) identifier and SwissProt as a secondary if not
+done yet as follows: - Select \textquotedblleft{}Custom Annotation
+Views in the leftmost panel of the page (NetAffx Analysis Center).
+The \textquotedblleft{}Create/Edit Custom Views\textquotedblright{}
+page will popup. - Enter the custom view name (\textquotedblleft{}Affy2Uniprot\textquotedblright{}
+for example) and select Probe Set ID and SwissProt items in \textquotedblleft{}Select
+Fields for your view\textquotedblright{} list. Click Submit. - Go
+back to the \textquotedblleft{}Batch Query\textquotedblright{} page.
+Select \textquotedblleft{}Human Genome U133 Plus 2.0 array\textquotedblright{}
+and \textquotedblleft{}Probe Set ID\textquotedblright{} in \textquotedblleft{}Select
+a GeneChip Array\textquotedblright{} and \textquotedblleft{}Select
+the search type\textquotedblright{} list boxes correspondingly. 
+\item Select the first upload file from the set created at step 1 using
+\textquotedblleft{}Browse\textquotedblright{} button and click \textquotedblleft{}Submit\textquotedblright{}.
+The \textquotedblleft{}Show Results\textquotedblright{} page will
+popup. 
+\item Click on \textquotedblleft{}Export Results\textquotedblright{} item.
+The \textquotedblleft{}Export Center\textquotedblright{} page will
+popup. Select \textquotedblleft{}Tab Separated Value\textquotedblright{}
+and \textquotedblleft{}Affy2Uniprot\textquotedblright{} in \textquotedblleft{}Select
+File Format\textquotedblright{} and \textquotedblleft{}Select a View\textquotedblright{}
+list boxes correspondingly. Click \textquotedblleft{}Submit\textquotedblright{}
+and then save the exported file when prompted. 
+\item Repeat steps 3, 5 and 6 for files created at step 1. Copy the set
+of resulting .tsv files into directory of your choice and use them
+when working with AnnotationNetAffx service retrieval object. 
+\item After downloading the file, the ID Map data can be retrieved by creating
+the AnnotationNetAffx object with df\_filename slot containing the
+path to the downloaded file directory (or the character vector of
+paths to file set) and then calling Annotation.getIdMap() on this
+object. If df\_filename is not specified (NULL by default) the File
+Open dialog will popup during the data retrieval allowing to specify
+the file set interactively.
+\end{enumerate}
+
+\section*{Appendix B}
+
+
+\subsection*{Obtaining the DAVID ID Mapping data files through the DAVID knowledge
+base request form using Homo Sapiens as species and AFFY\_ID and UNIPROT\_ID
+as primary and secondary keys.}
+\begin{enumerate}
+\item Using your Web Browser, open the following url:\\
+ \href{http://david.abcc.ncifcrf.gov/knowledgebase/DAVID_knowledgebase.html}{http://david.abcc.ncifcrf.gov/knowledgebase/DAVID\_{}knowledgebase.html} 
+\item Click on the \textquotedblleft{}Request data from the DAVID Knowledgebase!!
+\textquotedblleft{} web page item. The \textquotedblleft{}DAVID KNOWLEDGEBASE
+LOGIN\textquotedblright{} web page will open. If you are not registered
+yet, follow the \textquotedblleft{}registration page\textquotedblright{}
+link to register. Enter your email address used during the registration
+process and then click \textquotedblleft{}Login\textquotedblright{}. 
+\item The license agreement page \textquotedblleft{}NATIONAL INSTITUTES
+OF HEALTH ACADEMIC, GOVERNMENT, NON-PROFIT RIGHT TO USE SOFTWARE AGREEMENT
+for DAVID Knowledgebase 1.0\textquotedblright{} will open. Read the
+agreement and then click \textquotedblleft{}Accept\textquotedblright{}.
+\item The \textquotedblleft{}DAVID Knowledgebase Request\textquotedblright{}
+page will open. Following the instructions define species as \textquotedblleft{}Homo
+Sapiens\textquotedblright{} (Step 1, Select Species), AFFY\_ID as
+a primary key (Central Identifier, Step 2) and UNIPROT\_ID as secondary
+key (Select Annotation Categories/Main Accessions, Step 3). Click
+\textquotedblleft{}Submit\textquotedblright{}. 
+\item The confirmation page containing the summary of your request will
+open. In couple days you will receive notification by email containing
+the link to the download page. 
+\item After downloading the file, the ID Map data can be retrieved by creating
+the AnnotationDavidCsv object with df\_filename slot containing the
+path to the downloaded file and then calling Annotation.getIdMap()
+on this object. If df\_filename is not specified (NULL by default)
+the File Open dialog will popup during the data retrieval allowing
+to specify the file location interactively. 
+\end{enumerate}
+
+\section*{Appendix C}
+
+
+\subsection*{Obtaining the Ensembl ID Mapping data file using the HG-U133\_Plus\_2
+array as an example.}
+\begin{enumerate}
+\item Open the Ensembl main page (\href{http://www.ensembl.org}{www.ensembl.org})
+and then select \textquotedblleft{}BioMart\textquotedblright{} item
+from the menu at the top. 
+\item Choose \textquotedblleft{}Ensembl Genes 60\textquotedblright{} as
+a database and select \textquotedblleft{}Homo sapience genes (GRCh37.p2)\textquotedblright{}
+as a data set. 
+\item Define the attributes by clicking on the \textquotedblleft{}Attributes\textquotedblright{}
+item in the left panel and then check the following items in the right
+panel: - \textquotedblleft{}GENE/ Ensembl Gene ID\textquotedblright{},
+- \textquotedblleft{}External References/ UniProt/TrEMBL Accession\textquotedblright{}
+, - \textquotedblleft{}External References/ UniProt/SwissProt Accession\textquotedblright{}
+and - \textquotedblleft{}Microarray/ Affy HG U133-PLUS-2\textquotedblright{}
+Click on \textquotedblleft{}Results\textquotedblright{} button above
+the left panel. The Results will be displayed in the right panel. 
+\item In the Results panel, set \textquotedblleft{}Export all results to\textquotedblright{}
+as \textquotedblleft{}File\textquotedblright{} and \textquotedblleft{}CSV\textquotedblright{}
+and check the box \textquotedblleft{}Unique Results only\textquotedblright{}.
+Press \textquotedblleft{}GO\textquotedblright{} and then save the
+file when prompted. 
+\item After downloading the file, the ID Map data can be retrieved by creating
+the AnnotationEnsembleCsv object with df\_filename slot containing
+the path to the downloaded file and then calling Annotation.getIdMap()
+on this object. If df\_filename is not specified (NULL by default)
+the File Open dialog will pop up during the data retrieval allowing
+to specify the file location interactively.
+\end{enumerate}
+
+\end{document}
