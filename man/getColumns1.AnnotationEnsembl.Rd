@@ -20,7 +20,6 @@ Retrieve the ID match pairs  using the algorithm corresponding to full.merge = F
 flag of the given AnnotationEnsemblCsv object.
 }
 
-\synopsis{getColumns1.AnnotationEnsembl(static, df, primaryColumn, secondaryColumn, verbose=FALSE, ...)}
 \usage{AnnotationEnsembl$getColumns1(df, primaryColumn, secondaryColumn, verbose=FALSE, ...)}
 
 \arguments{

@@ -1,7 +1,3 @@
-.First.lib <- function(libname, pkgname) {
-	#data(IdMappingAnnotationData.root);
-}
-
 .onAttach = function(libname, pkgname) {
 	desc <- packageDescription(pkgname)
 	DQdate <-  desc$Date

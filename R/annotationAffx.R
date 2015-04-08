@@ -11,7 +11,6 @@
 # Affymetrix annotation data online repository through the getIdMap() and getDataFrame() calls.
 # }
 #
-# @synopsis
 #
 # \arguments{
 # \item{cacheFolderName}{ The path to a service cashing directory for a given AnnotationAffx object.

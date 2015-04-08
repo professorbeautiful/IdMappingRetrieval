@@ -21,7 +21,6 @@
   the internal reference to the root directory.
  }
 
- \synopsis{init.Annotation(static, directory="./annotationData", verbose=TRUE, ...)}
 \usage{Annotation$init(directory="./annotationData", verbose=TRUE, ...)}
 
  \arguments{

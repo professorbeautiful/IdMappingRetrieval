@@ -17,7 +17,6 @@
 # Annotation.getIdMap() and Annotation.getDataFrame() calls on the AnnotationNetAffx object.
 # }
 #
-# @synopsis
 #
 # \arguments{
 # \item{cacheFolderName}{ The symbolic name of a service represented by a given AnnotationNetAffx object.}

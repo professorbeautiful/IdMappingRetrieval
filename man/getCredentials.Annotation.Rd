@@ -20,7 +20,6 @@
  allowing to access the given service programmatically
  }
 
- \synopsis{getCredentials.Annotation(static, serviceName, ...)}
 \usage{Annotation$getCredentials(serviceName, ...)}
 
  \arguments{

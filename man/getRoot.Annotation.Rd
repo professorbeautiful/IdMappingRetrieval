@@ -16,7 +16,6 @@
 \title{Get the path to service caching directory}
 \description{Get the path to service caching directory.}
 
-\synopsis{getRoot.Annotation(static, cacheFolderName, ...)}
 \usage{Annotation$getRoot(cacheFolderName, ...)}
 
 \arguments{

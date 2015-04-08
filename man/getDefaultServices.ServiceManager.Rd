@@ -16,7 +16,6 @@
  \title{Get the default services available within the annotation system}
  \description{Get the default services available within the annotation system.}
 
- \synopsis{getDefaultServices.ServiceManager(static, ...)}
 \usage{ServiceManager$getDefaultServices(...)}
 
  \arguments{

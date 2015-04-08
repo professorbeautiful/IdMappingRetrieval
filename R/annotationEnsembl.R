@@ -13,7 +13,6 @@
 # calls on this object.
 # }
 #
-# @synopsis
 #
 #
 # \arguments{

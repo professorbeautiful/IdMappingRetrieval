@@ -23,7 +23,6 @@
  reusing this information during the subsiquent calls to the given query system.
  }
 
- \synopsis{setCredentials.Annotation(static, cacheFolderName, verbose=FALSE, ...)}
 \usage{Annotation$setCredentials(cacheFolderName, verbose=FALSE, ...)}
 
  \arguments{

@@ -15,7 +15,6 @@
 
 \title{Create a set of files for NetAffx batch query}
 
-\synopsis{createSubmission.AnnotationNetAffx(static, chunk=9999, folder="./NetAffx_submission", verbose=TRUE, ...)}
 \usage{AnnotationNetAffx$createSubmission(chunk=9999, folder="./NetAffx_submission", verbose=TRUE, ...)}
 
 \description{

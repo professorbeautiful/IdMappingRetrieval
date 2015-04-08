@@ -11,7 +11,6 @@
 # calls on this AnnotationDavid object.
 # }
 #
-# @synopsis
 #
 #
 # \arguments{

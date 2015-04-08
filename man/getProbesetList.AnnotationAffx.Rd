@@ -16,7 +16,6 @@
 
 \description{Get Affymetrix probeset ID list for a given array type.}
 
-\synopsis{getProbesetList.AnnotationAffx(static, arrayType="menu", verbose=FALSE, ...)}
 \usage{AnnotationAffx$getProbesetList(arrayType="menu", verbose=FALSE, ...)}
 
 \arguments{

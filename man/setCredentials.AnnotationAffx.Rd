@@ -17,7 +17,6 @@
 
  \description{Create and store the credentials information for Affymetrix service.}
 
- \synopsis{setCredentials.AnnotationAffx(static, verbose=FALSE, ...)}
 \usage{AnnotationAffx$setCredentials(verbose=FALSE, ...)}
 
  \arguments{

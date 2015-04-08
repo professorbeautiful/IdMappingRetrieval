@@ -13,7 +13,6 @@
 # like AnnotationAffx, AnnotationEnvision etc. are derived
 # }
 # 
-# @synopsis
 #
 # \arguments{
 #   \item{cacheFolderName}{ The path to a service cashing directory for a given Annotation object.

@@ -17,7 +17,6 @@
 
 \description{Select the array type.}
 
-\synopsis{getArrayType.Annotation(static, arrayType="menu", graphics=getOption("menu.graphics"), ...)}
 \usage{Annotation$getArrayType(arrayType="menu", graphics=getOption("menu.graphics"), ...)}
 
 \arguments{

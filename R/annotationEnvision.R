@@ -17,7 +17,6 @@
 #  getIdMap() and getDataFrame() calls on the AnnotationEnvision object.
 # }
 #
-# @synopsis
 #
 #
 # \arguments{

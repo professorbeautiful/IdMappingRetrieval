@@ -13,7 +13,6 @@
 # the process of data retrieval from a variety of resources in a batch mode.
 # }
 # 
-# @synopsis
 #
 #
 # \arguments{

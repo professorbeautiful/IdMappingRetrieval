@@ -17,7 +17,6 @@
 
 \description{Get all available microarray chip types.}
 
-\synopsis{getArrayTypes.Annotation(static, ...)}
 \usage{Annotation$getArrayTypes(...)}
 
 \arguments{

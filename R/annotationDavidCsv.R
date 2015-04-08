@@ -16,7 +16,6 @@
 # Annotation.getIdMap() and Annotation.getDataFrame() calls on the AnnotationDavidCsv object.
 # }
 #
-# @synopsis
 #
 # \arguments{
 # \item{cacheFolderName}{ The symbolic name of a service represented by a given AnnotationDavidCsv object.}

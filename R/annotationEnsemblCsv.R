@@ -16,7 +16,6 @@
 # getIdMap() and getDataFrame() calls on the AnnotationEnsemblCsv object.
 # }
 #
-# @synopsis
 #
 #
 # \arguments{
