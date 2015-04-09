@@ -43,7 +43,6 @@ setConstructorS3("ServiceManager",function(services=list(),...){
 # @title "Get list of annotation services encapsulated within the particular ServiceManager object"
 # \description{@get "title".}
 # 
-# @synopsis
 #
 # \arguments{\item{...}{Not used.}}
 #
@@ -70,7 +69,6 @@ setMethodS3("getServices","ServiceManager",function(this,...){
 # @title "Set the list of services for a ServiceManager object"
 # \description{@get "title".}
 # 
-# @synopsis
 #
 # \arguments{
 # \item{services}{A @list of services to be set within the ServiceManager object.}
@@ -113,7 +111,6 @@ setMethodS3("setServices","ServiceManager",function(this,services,...){
 # @title "Add services to the ServiceManager object"
 # \description{@get "title".}
 # 
-# @synopsis
 # 
 # \arguments{
 # \item{services}{A @list of services to be set within the ServiceManager object.}
@@ -159,7 +156,6 @@ setMethodS3("addServices","ServiceManager",function(this,services,...){
 # @title "Get the default services available within the annotation system"
 # \description{@get "title".}
 # 
-# @synopsis
 #
 # \arguments{
 # \item{...}{Not used.}
@@ -209,7 +205,6 @@ setMethodS3("getDefaultServices","ServiceManager",function(static,...){
 # \description{@get "title". If called as static i.e. ServiceManager$getIdMapList(...), a set of default services
 # (see \code{\link[IdMappingRetrieval:getDefaultServices.ServiceManager]{getDefaultServices}}) will be used to collect data from.}
 # 
-# @synopsis
 #
 # \arguments{
 # \item{arrayType}{ The Affymertix microarray name. If 'menu', display a set of all available array types,
@@ -291,7 +286,6 @@ setMethodS3("getIdMapList","ServiceManager",function(this,
 # \description{@get "title".If called as static i.e. ServiceManager$getIdMapList(...), a set of default services
 # (see \code{\link[IdMappingRetrieval:getDefaultServices.ServiceManager]{getDefaultServices}})will be used to collect data from. }
 # 
-# @synopsis
 #
 # \arguments{
 # \item{arrayType}{ The Affymertix microarray name. If 'menu', display a set of all available array types

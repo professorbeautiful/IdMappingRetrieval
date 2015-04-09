@@ -63,7 +63,6 @@ getIdMap() or getDataFrame() on the AnnotationAffxCsv object.}
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[IdMappingRetrieval:createSubmission.AnnotationNetAffx]{createSubmission}} \tab Create a set of files for NetAffx batch query.\cr
 }
 
 

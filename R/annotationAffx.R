@@ -45,7 +45,6 @@ setConstructorS3("AnnotationAffx",function(cacheFolderName="Affymetrix",primaryC
 #
 # \description{@get "title".}
 #
-# @synopsis
 #
 # \arguments{
 # \item{verbose}{ if @TRUE enables diagnostic messages. Default is @FALSE.}
@@ -77,7 +76,6 @@ setMethodS3("setCredentials","AnnotationAffx",function(static,verbose=FALSE,...)
 #
 # \description{@get "title".}
 #
-# @synopsis
 #
 # \arguments{
 # \item{arrayType}{ The Affymertix microarray name. If 'menu' (default), display a set of all available array types,

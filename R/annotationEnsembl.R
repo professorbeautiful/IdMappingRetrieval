@@ -71,7 +71,6 @@ setConstructorS3("AnnotationEnsembl",function(cacheFolderName="Ensembl",
 # flag of the given AnnotationEnsemblCsv object.
 # }
 #
-# @synopsis
 #
 # \arguments{
 # \item{df}{ The data frame from which ID pairs to be retrieved.}
@@ -115,7 +114,6 @@ setMethodS3("getColumns1","AnnotationEnsembl",function(static,df,primaryColumn,s
 # flag of the given AnnotationEnsemblCsv object.
 # }
 #
-# @synopsis
 #
 # \arguments{
 # \item{df}{ The data frame from which ID pairs to be retrieved.}

@@ -52,8 +52,6 @@ retrieval during the getIdMap() call.Default is \code{\link[base:logical]{TRUE}}
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[IdMappingRetrieval:getProbesetList.AnnotationAffx]{getProbesetList}} \tab Get Affymetrix probeset ID list for a given array type.\cr
- \tab \code{\link[IdMappingRetrieval:setCredentials.AnnotationAffx]{setCredentials}} \tab Create and store the credentials information for Affymetrix service.\cr
 }
 
 

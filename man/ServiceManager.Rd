@@ -49,7 +49,6 @@ extends \link[R.oo]{Object}\cr
 \tabular{rll}{
  \tab \code{\link[IdMappingRetrieval:addServices.ServiceManager]{addServices}} \tab Add services to the ServiceManager object.\cr
  \tab \code{\link[IdMappingRetrieval:getDataFrameList.ServiceManager]{getDataFrameList}} \tab Collect raw data data from various online query systems utilizing Annotation service functionality.\cr
- \tab \code{\link[IdMappingRetrieval:getDefaultServices.ServiceManager]{getDefaultServices}} \tab Get the default services available within the annotation system.\cr
  \tab \code{\link[IdMappingRetrieval:getIdMapList.ServiceManager]{getIdMapList}} \tab Collect ID mapping data from various online query systems utilizing Annotation service functionality.\cr
  \tab \code{\link[IdMappingRetrieval:getServices.ServiceManager]{getServices}} \tab Get list of annotation services encapsulated within the particular ServiceManager object.\cr
  \tab \code{\link[IdMappingRetrieval:setServices.ServiceManager]{setServices}} \tab Set the list of services for a ServiceManager object.\cr

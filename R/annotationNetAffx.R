@@ -53,7 +53,6 @@ setConstructorS3("AnnotationNetAffx",function(cacheFolderName="NetAffxCsv",prima
 #
 # @title "Create a set of files for NetAffx batch query"
 #
-# @synopsis
 #
 # \description{
 # This is a convinience function generating a set of files suitable
@@ -105,7 +104,6 @@ setMethodS3("createSubmission","AnnotationNetAffx",function(static,chunk=9999,fo
 # @title "Check if the AnnotationNetAffx contains the reference to an existing data file or directory"
 # \description{@get "title".}
 #
-# @synopsis
 # 
 # \arguments{
 # \item{...}{Not used}

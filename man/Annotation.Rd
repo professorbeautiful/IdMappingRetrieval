@@ -55,16 +55,10 @@ extends \link[R.oo]{Object}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[IdMappingRetrieval:getArrayType.Annotation]{getArrayType}} \tab Select the array type.\cr
- \tab \code{\link[IdMappingRetrieval:getArrayTypes.Annotation]{getArrayTypes}} \tab Get all available microarray chip types.\cr
- \tab \code{\link[IdMappingRetrieval:getCredentials.Annotation]{getCredentials}} \tab Retrieve credentials for a given service.\cr
  \tab \code{\link[IdMappingRetrieval:getDataFrame.Annotation]{getDataFrame}} \tab Get the entire data set available from a particular service in a form of a data frame.\cr
  \tab \code{\link[IdMappingRetrieval:getFolderName.Annotation]{getFolderName}} \tab Get caching folder name for a given Annotation object.\cr
  \tab \code{\link[IdMappingRetrieval:getIdMap.Annotation]{getIdMap}} \tab Get an IdMap object using the data retrieved by a particular service represented by annotation object.\cr
- \tab \code{\link[IdMappingRetrieval:getRoot.Annotation]{getRoot}} \tab Get the path to service caching directory.\cr
  \tab \code{\link[IdMappingRetrieval:getServiceRoot.Annotation]{getServiceRoot}} \tab Get a root directory for a particular annotation object.\cr
- \tab \code{\link[IdMappingRetrieval:init.Annotation]{init}} \tab Init annotation subsystem.\cr
- \tab \code{\link[IdMappingRetrieval:setCredentials.Annotation]{setCredentials}} \tab Create and store the credentials information for given service.\cr
  \tab \code{\link[IdMappingRetrieval:setOptions.Annotation]{setOptions}} \tab Set the parameters for an annotation object.\cr
 }
 

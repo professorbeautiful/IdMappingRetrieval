@@ -60,7 +60,6 @@ setConstructorS3("Annotation",function(cacheFolderName="",primaryColumn="From",s
 #  the internal reference to the root directory.
 # }
 #
-# @synopsis
 #
 # \arguments{
 # \item{directory}{The root directory of the annotation cashing subsystem. Default is './annotationData'.}
@@ -101,7 +100,6 @@ setMethodS3("init","Annotation",function(static,directory="./annotationData",ver
 # @title "Get the path to service caching directory"
 # \description{@get "title".}
 #
-# @synopsis
 #
 # \arguments{
 # \item{cacheFolderName}{The path to service caching directory. If missing,
@@ -145,7 +143,6 @@ setMethodS3("getRoot","Annotation",function(static,cacheFolderName,...) {
 # reusing this information during the subsiquent calls to the given query system.
 # }
 #
-# @synopsis
 #
 # \arguments{
 # \item{cacheFolderName}{Caharacter string representing service name.}
@@ -195,7 +192,6 @@ setMethodS3("setCredentials","Annotation",function(static,cacheFolderName,verbos
 # allowing to access the given service programmatically
 # }
 #
-# @synopsis
 #
 # \arguments{
 # \item{serviceName}{@character string representing service name.}
@@ -236,7 +232,6 @@ setMethodS3("getCredentials","Annotation",function(static,serviceName,...){
 #
 # \description{@get "title".}
 #
-# @synopsis
 #
 # \arguments{
 #  \item{...}{Not used.}
@@ -285,7 +280,6 @@ setMethodS3("getArrayTypes","Annotation",function(static,...){
 #
 # \description{@get "title".}
 #
-# @synopsis
 #
 # \arguments{
 #  \item{arrayType}{ The Affymertix microarray name. If 'menu', display a set of all available array types
@@ -341,7 +335,6 @@ setMethodS3("getArrayType","Annotation",function(static,arrayType="menu",graphic
 #  see \code{\link[IdMappingRetrieval:getServiceRoot.Annotation]{getServiceRoot}}.
 # }
 #
-# @synopsis
 #
 # \arguments{
 #  \item{...}{Not used.}
@@ -372,7 +365,6 @@ setMethodS3("getFolderName","Annotation",function(this,...){
 #  caching root directory.
 # }
 #
-# @synopsis
 #
 # \arguments{
 #  \item{...}{Not used.}
@@ -406,7 +398,6 @@ setMethodS3("getServiceRoot","Annotation",function(this,...){
 #
 # \description{@get "title".}
 #
-# @synopsis
 #
 # \arguments{
 # \item{...}{Parameters to be set for a given annotation object.}
@@ -444,7 +435,6 @@ setMethodS3("setOptions","Annotation",function(this,...){
 # and reflects the format and content of the data returned by a particular query system.
 # }
 #
-# @synopsis
 #
 # \arguments{
 # \item{arrayType}{ The microarray chip name.}
@@ -477,7 +467,6 @@ setMethodS3("readDF","Annotation",function(this,arrayType,verbose=FALSE,...){
 # and reflects the format and content of the data frame retrieved by a prticular Annotation object.
 # }
 #
-# @synopsis
 #
 # \arguments{
 #  \item{df}{The @data.frame from which ID pairs to be retrieved.}
@@ -510,7 +499,6 @@ setMethodS3("getColumns","Annotation",function(this,df,arrayType,verbose=FALSE,.
 # data in a service directory allowing the fast retrieval of data next time the function is called.
 # }
 #
-# @synopsis
 #
 # \arguments{
 #  \item{arrayType}{ Character string representing the array name. If 'menu', the list of available arrays is displayed
@@ -590,7 +578,6 @@ setMethodS3("getDataFrame","Annotation",function(this,arrayType="menu",force=FAL
 # @title "Get an IdMap object using the data retrieved by a particular service represented by annotation object"
 # \description{@get "title".}
 #
-# @synopsis
 #
 # \arguments{
 # \item{arrayType}{ A @character string representing the array name. If 'menu', the list of available arrays is displayed

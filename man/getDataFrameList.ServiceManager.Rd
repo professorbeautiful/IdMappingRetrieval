@@ -15,7 +15,7 @@
 
  \title{Collect raw data data from various online query systems utilizing Annotation service functionality}
  \description{Collect raw data data from various online query systems utilizing Annotation service functionality.If called as static i.e. ServiceManager$getIdMapList(...), a set of default services
- (see \code{\link[IdMappingRetrieval:getDefaultServices.ServiceManager]{getDefaultServices}})will be used to collect data from. }
+will be used to collect data from. }
 
  \usage{\method{getDataFrameList}{ServiceManager}(this, arrayType="menu", selection="menu", force=FALSE, graphics=TRUE, verbose=FALSE, ...)}
 
