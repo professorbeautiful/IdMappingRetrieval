@@ -33,7 +33,6 @@
  #add services
  addServices(svm,list(
 	NetAffx_F2=AnnotationAffx("Affymetrix_3_20_10"),
-	DAVID_Q2=AnnotationDavid("DAVID_3_20_10",species="Homo sapiens"),
 	EnSembl_Q2=AnnotationEnsembl("Ensembl_3_20_10",species="Homo sapiens")
  ));
  print(names(getServices(svm)));

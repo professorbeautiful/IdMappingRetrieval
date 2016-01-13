@@ -23,7 +23,7 @@
 \code{~~+--}\emph{\code{Annotation}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link{AnnotationAffx}, \link{AnnotationDavid}, \link{AnnotationDavidCsv}, \link{AnnotationEnsembl}, \link{AnnotationEnsemblCsv}, \link{AnnotationEnvision}, \link{AnnotationNetAffx}\cr
+\link{AnnotationAffx}, \link{AnnotationEnsembl}, \link{AnnotationEnsemblCsv}, \link{AnnotationEnvision}, \link{AnnotationNetAffx}\cr
 
 public abstract static class \bold{Annotation}\cr
 extends \link[R.oo]{Object}\cr

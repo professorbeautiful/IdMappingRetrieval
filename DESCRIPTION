@@ -8,11 +8,11 @@ Maintainer: Alex Lisovich <alex.lisovich@gmail.com>, Roger Day <day01@pitt.edu>
 Description: Data retrieval for identifier mapping performance analysis
 License: GPL-2
 Depends: R.oo, XML, RCurl, rChoiceDialogs
-Imports: biomaRt, ENVISIONQuery, DAVIDQuery, AffyCompatible,
+Imports: biomaRt, ENVISIONQuery, AffyCompatible,
         R.methodsS3, utils
 LazyLoad: yes
 Collate: 'annotation.R' 'annotationAffx.R' 'annotationDataRoot.R'
-        'zzz.R' 'annotationDavid.R' 'annotationDavidCsv.R'
+        'zzz.R' 
         'annotationEnsembl.R' 'annotationEnsemblCsv.R'
         'annotationEnvision.R' 'annotationNetAffx.R' 'compatibility.R'
         'IdMappingRetrieval-package.R' 'serviceManager.R'

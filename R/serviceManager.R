@@ -85,7 +85,6 @@ setMethodS3("getServices","ServiceManager",function(this,...){
 # #redefine set of services
 # setServices(svm,list(
 #	NetAffx_F2=AnnotationAffx("Affymetrix_3_20_10"),
-#	DAVID_Q2=AnnotationDavid("DAVID_3_20_10",species="Homo sapiens"),
 #	EnSembl_Q2=AnnotationEnsembl("Ensembl_3_20_10",species="Homo sapiens")
 # ));
 # print(names(getServices(svm)));
@@ -127,7 +126,6 @@ setMethodS3("setServices","ServiceManager",function(this,services,...){
 # #add services
 # addServices(svm,list(
 #	NetAffx_F2=AnnotationAffx("Affymetrix_3_20_10"),
-#	DAVID_Q2=AnnotationDavid("DAVID_3_20_10",species="Homo sapiens"),
 #	EnSembl_Q2=AnnotationEnsembl("Ensembl_3_20_10",species="Homo sapiens")
 # ));
 # print(names(getServices(svm)));
@@ -164,8 +162,6 @@ setMethodS3("addServices","ServiceManager",function(this,services,...){
 # \value{ A @list of \code{\link{Annotation}} - derived service objects containing the following items:
 # \item{Affx_Q}{\code{\link{AnnotationAffx}} object retrieving data from the Affymetrix online annotation data repository} 
 # \item{Affx_F}{\code{\link{AnnotationNetAffx}} object retrieving the file based data from NetAffx interactive batch query system}
-# \item{DAVID_Q}{\code{\link{AnnotationDavid}} object retrieving data from DAVID online query system}
-# \item{DAVID_F}{\code{\link{AnnotationDavidCsv}} object retrieving the file based data from the DAVID backend annotation system}
 # \item{EnSembl_Q}{\code{\link{AnnotationEnsembl}} object retrieving data from Ensembl/Biomart online query system}
 # \item{EnSembl_F}{\code{\link{AnnotationEnsemblCsv}} object retrieving the file based data from Ensembl/Biomart interactive query system}
 # \item{EnVision_Q}{\code{\link{AnnotationEnvision}} objectretriving data from the Envision online query system}
@@ -186,8 +182,6 @@ setMethodS3("getDefaultServices","ServiceManager",function(static,...){
 
 	services$Affx_Q<-AnnotationAffx();
 	services$Affx_F<-AnnotationNetAffx();
-	services$DAVID_Q<-AnnotationDavid();
-	services$DAVID_F<-AnnotationDavidCsv();
 	services$EnSembl_Q<-AnnotationEnsembl();
 	services$EnSembl_F<-AnnotationEnsemblCsv();
 	services$EnVision_Q<-AnnotationEnvision();

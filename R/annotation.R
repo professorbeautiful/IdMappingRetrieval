@@ -372,15 +372,6 @@ setMethodS3("getFolderName","Annotation",function(this,...){
 #
 # \value{A @character string containing the path to the service caching directory.}
 #
-# \examples{
-# \dontrun{
-#   #get the path to service object caching folder
-#   annObj<-AnnotationDavid("DAVID",species="Homo sapiens");
-#   getServiceRoot(annObj);
-#   #get the path to caching system root directory
-#   Annotation$getServiceRoot();
-# }}
-#
 # \seealso{@seeclass}
 #
 # \author{Alex Lisovich, Roger Day}
