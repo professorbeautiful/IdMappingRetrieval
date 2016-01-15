@@ -1,8 +1,8 @@
 Package: IdMappingRetrieval
 Type: Package
 Title: ID Mapping Data Retrieval
-Version: 1.19.1
-Date: 2016-01-12
+Version: 1.18.1
+Date: 2016-01-14
 Author: Alex Lisovich, Roger Day
 Maintainer: Alex Lisovich <alex.lisovich@gmail.com>, Roger Day <day01@pitt.edu>
 Description: Data retrieval for identifier mapping performance analysis
